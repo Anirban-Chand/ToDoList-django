@@ -1,0 +1,9 @@
+<h1>Task: {{task.title}}</h1>
+<h4>Status:</h4>
+{% if task.complete == True %}
+    Completed
+{% else %}
+    Incomplete
+{% endif %}
+<h4>Task Description:</h4>
+<p>{{task.description}}</p>

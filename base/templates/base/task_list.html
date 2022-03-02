@@ -1,0 +1,61 @@
+{% if request.user.is_authenticated %}
+    <p>{{request.user}}</p>
+    <a href="{% url 'logout' %}">Log Out</a>
+{% else %}
+    <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+
+
+<hr>
+<h1>My To Do List</h1>
+
+<table>
+    <tr>
+        <th>
+            <h3><u>Index</u></h3>
+        </th>
+        <th>
+            <h3><u>Items</u></h3>
+        </th>
+        <th></th>
+        <th>
+            <h3><u>Created On</u></h3>
+        </th>
+        <th></th>
+        <th><h3><u>Status</u></h3></th>
+        <th></th>
+        <th><h3><u>Details</u></h3></th>
+        <th></th>
+        <th><h3><u>Edit</u></h3></th>
+        <th></th>
+        <th><h3><u>Delete</u></h3></th>
+    </tr>
+    {% comment %} ListView in Django by default looks for a object list to iterate through the items {% endcomment %}
+    {% for task in tasks %}
+    <tr>
+        <td><b>&emsp;{{task.id}}. </b></td>
+        <td><b>&emsp;&emsp;{{task.title}} </b></td>
+        <td>&emsp;</td>
+        <td> {{task.created_on}} </td>
+        <td>&emsp;</td>
+        <td>
+            {% if task.complete == True %}
+                Completed
+            {% else %}
+                Incomplete
+            {% endif %}
+        </td>
+        <td>&emsp;</td>
+        <td><a href="{% url 'task' task.id %}">&ensp;Details</a></td>
+        <td>&emsp;</td>
+        <td><a href="{% url 'task-update' task.id %}">&ensp;Edit</a></td>
+        <td>&emsp;</td>
+        <td><a href="{% url 'task-delete' task.id %}">&ensp;Delete</a></td>
+    </tr>
+    {% empty %}
+    <h4>Your Task List is Empty</h4>
+    {% endfor %}
+</table>
+<br>
+<br>
+<a href="{% url 'task-create' %}"><b><u>+ Add Task</u></b></a>
